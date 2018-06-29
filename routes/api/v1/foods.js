@@ -9,12 +9,10 @@ const database = require('knex')(configuration)
 router.get('/', function(req, res, next) {
   database.raw('SELECT * FROM foods')
     .then((foods) => {
-      console.log(foods.rows);
       if (!foods) {
         return res.sendStatus(404);
       } else {
-        return res.sendStatus(200);
-        return res.json(foods.rows);
+        return res.status(200).json(foods.rows);
       }
     })
 });

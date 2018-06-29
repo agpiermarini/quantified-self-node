@@ -7,6 +7,30 @@ const app = require('../app')
 
 chai.use(chaiHttp);
 
+
+/* Clean database and run migrations/seeds before each test*/
+describe('API Routes', function() {
+  beforeEach(function(done) {
+    knex.migrate.rollback()
+    .then(function() {
+      knex.migrate.latest()
+      .then(function() {
+        return knex.seed.run()
+        .then(function() {
+          done();
+        });
+      });
+    });
+  });
+
+  afterEach(function(done) {
+    knex.migrate.rollback()
+    .then(function() {
+      done();
+    });
+  });
+});
+
 describe("Food endpoints", () => {
   describe("GET /api/v1/foods", () => {
     it('returns all foods in the database', (done) => {
@@ -14,9 +38,14 @@ describe("Food endpoints", () => {
       .get('/api/v1/foods')
       .end((err, res) => {
         expect(err).to.be.null;
-        expect(res).to.have.status(200)
-        expect(res.body).to.eql({})
-        // expect(res.length).to.eql(2);
+        expect(res).to.have.status(200);
+        expect(res.body.length).to.eql(3);
+        expect(res.body[0].name).to.eq("Ramen");
+        expect(res.body[0].calories).to.eq(650);
+        expect(res.body[1].name).to.eq("Coffee");
+        expect(res.body[1].calories).to.eq(50);
+        expect(res.body[2].name).to.eq("Shumai");
+        expect(res.body[2].calories).to.eq(400);
         done();
       })
     })
