@@ -50,4 +50,19 @@ describe("Food endpoints", () => {
       })
     })
   })
+
+  describe("GET /api/v1/foods/:id", () => {
+    it('returns food corresponding to :id', (done) => {
+      chai.request(app)
+      .get('/api/v1/foods/1')
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body.length).to.eql(1);
+        expect(res.body[0].name).to.eq("Ramen");
+        expect(res.body[0].calories).to.eq(650);
+        done();
+      })
+    })
+  })
 });
