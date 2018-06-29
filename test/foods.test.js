@@ -15,7 +15,7 @@ describe("Food endpoints", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200)
-        console.log(res.body)
+        expect(res.body).to.eql({})
         // expect(res.length).to.eql(2);
         done();
       })
