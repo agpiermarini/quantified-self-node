@@ -15,22 +15,16 @@ const knex = require('knex')(configuration)
 /* Clean database and run migrations/seeds before each test*/
 describe('Food endpoints', function() {
   beforeEach(function(done) {
-    knex.raw('TRUNCATE foods RESTART IDENTITY')
+    knex.seed.run()
     .then(function() {
-      knex.seed.run()
-      .then(function() {
-        done();
-      })
+      done();
     });
   });
 
   afterEach(function(done) {
-    knex.raw('TRUNCATE foods RESTART IDENTITY')
+    knex.seed.run()
     .then(function() {
-      knex.seed.run()
-      .then(function() {
-        done();
-      })
+      done();
     });
   });
 
