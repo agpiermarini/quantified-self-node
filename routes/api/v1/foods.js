@@ -22,7 +22,7 @@ router.get('/:id', function(req, res, next) {
   let id = req.params.id
   database.raw('SELECT * FROM foods WHERE id=?', [id])
     .then((food) => {
-      if (!food.rows.length == 0) {
+      if (!food.rows.length == 1) {
         return res.sendStatus(404);
       } else {
         return res.status(200).json(food.rows);
@@ -41,6 +41,9 @@ router.post('/', function(req, res, next) {
       } else {
         return res.status(200).json(food.rows[0]);
       }
+    })
+    .catch(err=>{
+      return res.sendStatus(404);
     })
 });
 

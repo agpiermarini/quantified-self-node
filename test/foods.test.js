@@ -67,7 +67,6 @@ describe('Food endpoints', function() {
       chai.request(app)
       .get('/api/v1/foods/99')
       .end((err, res) => {
-        // expect(err).to.not.be.null;
         expect(res).to.have.status(404);
         done();
       })
@@ -93,6 +92,18 @@ describe('Food endpoints', function() {
       })
     })
   })
+  //
+  describe("POST /api/v1/foods", () => {
+    it('fails to create record if name missing', (done) => {
+      chai.request(app)
+      .post('/api/v1/foods')
+      .send({ "food": { "calories": 900} })
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        done();
+      })
+    })
+  })
 
   describe("PATCH /api/v1/foods/:id", () => {
     it('updates food object corresponding to :id', (done) => {
@@ -114,7 +125,6 @@ describe('Food endpoints', function() {
       chai.request(app)
       .delete('/api/v1/foods/1')
       .end((err, res) => {
-        expect(err).to.be.null;
         expect(res).to.have.status(204);
         done();
       })
