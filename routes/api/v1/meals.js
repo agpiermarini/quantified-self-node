@@ -7,7 +7,7 @@ const database = require('knex')(configuration)
 
 /* GET all meals */
 router.get('/', function(req, res, next) {
-  database.raw('SELECT * FROM meals')
+  database.raw('SELECT * FROM meals ORDER BY id')
     .then((meals) => {
       if (!meals.rows) {
         return res.sendStatus(404);
@@ -16,16 +16,5 @@ router.get('/', function(req, res, next) {
       }
     })
 });
-//
-// router.get('/', function(req, res, next) {
-//   database.raw('SELECT * FROM foods')
-//     .then((foods) => {
-//       if (!foods.rows) {
-//         return res.sendStatus(404);
-//       } else {
-//         return res.status(200).json(foods.rows);
-//       }
-//     })
-// // });
 
 module.exports = router;

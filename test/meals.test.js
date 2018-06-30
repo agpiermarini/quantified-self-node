@@ -32,9 +32,15 @@ describe('Meal endpoints', function() {
     it("returns all meal objects in the database", (done) => {
       chai.request(app)
       .get("/api/v1/meals")
-      .end((res, err) => {
+      .end((err, res) => {
         expect(err).to.be.null;
-        expect(res.status).to.have.status(200);
+        expect(res).to.have.status(200);
+        console.log(res.body);
+        expect(res.body[0].name).to.eq("Breakfast");
+        expect(res.body[1].name).to.eq("Lunch");
+        expect(res.body[2].name).to.eq("Snack");
+        expect(res.body[3].name).to.eq("Dinner");
+        expect(res.body[3].foods).to.not.be.undefined;
         done();
       })
     })
