@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
   database.raw('SELECT * FROM foods')
     .then((foods) => {
       if (!foods.rows) {
-        return req.sendStatus(404);
+        return res.sendStatus(404);
       } else {
         return res.status(200).json(foods.rows);
       }
