@@ -62,6 +62,18 @@ describe('Food endpoints', function() {
     })
   })
 
+  describe("GET /api/v1/foods/:id", () => {
+    it('returns 404 for nonexisting record', (done) => {
+      chai.request(app)
+      .get('/api/v1/foods/99')
+      .end((err, res) => {
+        // expect(err).to.not.be.null;
+        expect(res).to.have.status(404);
+        done();
+      })
+    })
+  })
+
   describe("POST /api/v1/foods", () => {
     it('creates a new food object in the database', (done) => {
       chai.request(app)
@@ -72,8 +84,11 @@ describe('Food endpoints', function() {
         expect(res).to.have.status(200);
         expect(res.body.name).to.eq("orange");
         expect(res.body.calories).to.eq(900);
-        // expect(knex('foods').count('*')).to.eq(4);
-        // console.log(knex('foods').count('id'))
+        // expect(knex('foods').count('*')
+        //     .then(foods => {
+        //       console.log(foods[0]["count"]);
+        //       return foods[0]["count"]
+        //     })).to.eq('4');
         done();
       })
     })
