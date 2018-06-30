@@ -59,4 +59,17 @@ router.patch('/:id', function(req, res, next) {
     })
 });
 
+/* DELETE existing food item */
+router.delete('/:id', function(req, res, next) {
+  let id = req.params.id
+  database.raw('DELETE FROM foods WHERE id = ?', [id])
+    .then(food => {
+      if (!food.rows) {
+        return res.sendStatus(404);
+      } else {
+        return res.sendStatus(204);
+      }
+    })
+});
+
 module.exports = router;

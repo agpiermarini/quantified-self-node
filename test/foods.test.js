@@ -73,7 +73,7 @@ describe('Food endpoints', function() {
         expect(res.body.name).to.eq("orange");
         expect(res.body.calories).to.eq(900);
         // expect(knex('foods').count('*')).to.eq(4);
-        console.log(knex('foods').count('id'))
+        // console.log(knex('foods').count('id'))
         done();
       })
     })
@@ -89,6 +89,18 @@ describe('Food endpoints', function() {
         expect(res).to.have.status(200);
         expect(res.body.name).to.eq("orange");
         expect(res.body.calories).to.eq(900);
+        done();
+      })
+    })
+  })
+
+  describe("DELETE /api/v1/foods/:id", () => {
+    it('deletes food object corresponding to :id', (done) => {
+      chai.request(app)
+      .delete('/api/v1/foods/1')
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(204);
         done();
       })
     })
