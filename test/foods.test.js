@@ -7,33 +7,32 @@ const app = require('../app')
 
 chai.use(chaiHttp);
 //
-// const environment = process.env.NODE_ENV || 'development'
-// const configuration = require('../../../knexfile')[environment]
-// const database = require('knex')(configuration)
+const environment = process.env.NODE_ENV || 'development'
+const configuration = require('../knexfile')[environment]
+const knex = require('knex')(configuration)
 
 
 /* Clean database and run migrations/seeds before each test*/
-describe('API Routes', function() {
+describe('Food endpoints', function() {
   beforeEach(function(done) {
-    knex.migrate.rollback()
+    knex.raw('TRUNCATE foods RESTART IDENTITY')
     .then(function() {
-      knex.migrate.latest()
+      knex.seed.run()
       .then(function() {
-        return knex.seed.run()
-        .then(function() {
-          done();
-        });
-      });
+        done();
+      })
     });
   });
 
   afterEach(function(done) {
-    knex.migrate.rollback()
+    knex.raw('TRUNCATE foods RESTART IDENTITY')
     .then(function() {
-      done();
+      knex.seed.run()
+      .then(function() {
+        done();
+      })
     });
   });
-});
 
   describe("GET /api/v1/foods", () => {
     it('returns all foods in the database', (done) => {
@@ -42,7 +41,7 @@ describe('API Routes', function() {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        // expect(res.body.length).to.eql(3);
+        expect(res.body.length).to.eql(3);
         expect(res.body[0].name).to.eq("Ramen");
         expect(res.body[0].calories).to.eq(650);
         expect(res.body[1].name).to.eq("Coffee");
@@ -84,7 +83,7 @@ describe('API Routes', function() {
       })
     })
   })
-  //
+
   describe("PATCH /api/v1/foods/:id", () => {
     it('creates a new food object in the database', (done) => {
       chai.request(app)
@@ -99,3 +98,4 @@ describe('API Routes', function() {
       })
     })
   })
+});
