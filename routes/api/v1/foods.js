@@ -54,7 +54,7 @@ router.patch('/:id', function(req, res, next) {
   let calories = req.body.food.calories
   database.raw('UPDATE foods SET name = ?, calories = ? WHERE id = ? RETURNING *', [name, calories, id])
     .then(food => {
-      if (!food.rows) {
+      if (!food.rows.length == 1) {
         return res.sendStatus(404);
       } else {
         return res.status(200).json(food.rows[0]);
@@ -75,6 +75,9 @@ router.delete('/:id', function(req, res, next) {
       } else {
         return res.sendStatus(204);
       }
+    })
+    .catch(err => {
+      return res.sendStatus(404);
     })
 });
 
