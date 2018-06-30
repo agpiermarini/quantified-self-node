@@ -30,4 +30,34 @@ router.get('/:id', function(req, res, next) {
     })
 });
 
+/* POST new food item */
+router.post('/', function(req, res, next) {
+  let name = req.body.food.name
+  let calories = req.body.food.calories
+  database.raw('INSERT INTO foods (name, calories) VALUES (?, ?) RETURNING *', [name, calories])
+    .then(food => {
+      if (!food.rows) {
+        return res.sendStatus(404);
+      } else {
+        return res.status(200).json(food.rows[0]);
+      }
+    })
+});
+
+/* PATCH existing food item */
+router.patch('/:id', function(req, res, next) {
+  let id = req.params.id
+  let name = req.body.food.name
+  let calories = req.body.food.calories
+  console.log(req.body)
+  database.raw('UPDATE foods SET name = ?, calories = ? WHERE id = ? RETURNING *', [name, calories, id])
+    .then(food => {
+      if (!food.rows) {
+        return res.sendStatus(404);
+      } else {
+        return res.status(200).json(food.rows[0]);
+      }
+    })
+});
+
 module.exports = router;

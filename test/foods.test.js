@@ -6,6 +6,10 @@ const pry = require('pryjs')
 const app = require('../app')
 
 chai.use(chaiHttp);
+//
+// const environment = process.env.NODE_ENV || 'development'
+// const configuration = require('../../../knexfile')[environment]
+// const database = require('knex')(configuration)
 
 
 /* Clean database and run migrations/seeds before each test*/
@@ -31,7 +35,6 @@ describe('API Routes', function() {
   });
 });
 
-describe("Food endpoints", () => {
   describe("GET /api/v1/foods", () => {
     it('returns all foods in the database', (done) => {
       chai.request(app)
@@ -39,7 +42,7 @@ describe("Food endpoints", () => {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body.length).to.eql(3);
+        // expect(res.body.length).to.eql(3);
         expect(res.body[0].name).to.eq("Ramen");
         expect(res.body[0].calories).to.eq(650);
         expect(res.body[1].name).to.eq("Coffee");
@@ -65,4 +68,34 @@ describe("Food endpoints", () => {
       })
     })
   })
-});
+
+  describe("POST /api/v1/foods", () => {
+    it('creates a new food object in the database', (done) => {
+      chai.request(app)
+      .post('/api/v1/foods')
+      .send({ "food": { "name": "orange", "calories": 900} })
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        console.log(res.body)
+        expect(res.body.name).to.eq("orange");
+        expect(res.body.calories).to.eq(900);
+        done();
+      })
+    })
+  })
+  //
+  describe("PATCH /api/v1/foods/:id", () => {
+    it('creates a new food object in the database', (done) => {
+      chai.request(app)
+      .patch('/api/v1/foods/1')
+      .send({ "food": { "name": "orange", "calories": 900} })
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body.name).to.eq("orange");
+        expect(res.body.calories).to.eq(900);
+        done();
+      })
+    })
+  })
