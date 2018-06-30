@@ -70,16 +70,17 @@ describe('Food endpoints', function() {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        console.log(res.body)
         expect(res.body.name).to.eq("orange");
         expect(res.body.calories).to.eq(900);
+        // expect(knex('foods').count('*')).to.eq(4);
+        console.log(knex('foods').count('id'))
         done();
       })
     })
   })
 
   describe("PATCH /api/v1/foods/:id", () => {
-    it('creates a new food object in the database', (done) => {
+    it('updates food object corresponding to :id', (done) => {
       chai.request(app)
       .patch('/api/v1/foods/1')
       .send({ "food": { "name": "orange", "calories": 900} })

@@ -49,7 +49,6 @@ router.patch('/:id', function(req, res, next) {
   let id = req.params.id
   let name = req.body.food.name
   let calories = req.body.food.calories
-  console.log(req.body)
   database.raw('UPDATE foods SET name = ?, calories = ? WHERE id = ? RETURNING *', [name, calories, id])
     .then(food => {
       if (!food.rows) {
