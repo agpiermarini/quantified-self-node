@@ -8,5 +8,5 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   let dropTable = `DROP TABLE meals`
-  return knex.raw(createTable);
+  return knex.raw(dropTable);
 };

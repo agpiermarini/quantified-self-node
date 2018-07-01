@@ -35,7 +35,6 @@ describe('Meal endpoints', function() {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        console.log(res.body);
         expect(res.body[0].name).to.eq("Breakfast");
         expect(res.body[1].name).to.eq("Lunch");
         expect(res.body[2].name).to.eq("Snack");
