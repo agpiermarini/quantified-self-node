@@ -108,7 +108,7 @@ describe('Meal endpoints', function() {
 
     it("returns 404 for nonexistent meal", (done) => {
       chai.request(app)
-      .get("/api/v1/meals/5/foods/3")
+      .post("/api/v1/meals/5/foods/3")
       .end((err, res) => {
         expect(res).to.have.status(404);
         done();
@@ -117,7 +117,38 @@ describe('Meal endpoints', function() {
 
     it("returns 404 for nonexistent food", (done) => {
       chai.request(app)
-      .get("/api/v1/meals/1/foods/5")
+      .post("/api/v1/meals/1/foods/5")
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        done();
+      })
+    })
+  });
+
+  describe("DELETE /api/v1/meals/:meal_id/foods/:food_id", () => {
+    it("deletes record in joins table and returns a message", (done) => {
+      chai.request(app)
+      .delete("/api/v1/meals/1/foods/2")
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.eq("Successfully removed Coffee from Breakfast");
+        done();
+      })
+    })
+
+    it("returns 404 for nonexistent meal", (done) => {
+      chai.request(app)
+      .delete("/api/v1/meals/5/foods/3")
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        done();
+      })
+    })
+
+    it("returns 404 for nonexistent food", (done) => {
+      chai.request(app)
+      .delete("/api/v1/meals/1/foods/5")
       .end((err, res) => {
         expect(res).to.have.status(404);
         done();
