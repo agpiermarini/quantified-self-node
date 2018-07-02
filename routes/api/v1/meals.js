@@ -7,7 +7,8 @@ const database = require('knex')(configuration)
 
 /* GET all meals */
 router.get('/', function(req, res, next) {
-  database.raw(`SELECT m.id, m.name, json_agg(f.* ORDER BY f.id) as foods
+  database.raw(`SELECT m.id, m.name,
+                COALESCE(json_agg(f.* ORDER BY f.id) FILTER (WHERE f.id IS NOT NULL), '[]') AS foods
                 FROM meals m
                 LEFT JOIN meal_foods mf ON m.id = mf.meal_id
                 LEFT JOIN foods f ON f.id = mf.food_id
@@ -24,8 +25,10 @@ router.get('/', function(req, res, next) {
 
 /* GET all foods associated with a meal */
 router.get('/:id/foods', function(req, res, next) {
+                  // json_agg(f.* ORDER BY f.id) as foods
   let id = req.params.id
-  database.raw(`SELECT m.id, m.name, json_agg(f.* ORDER BY f.id) as foods
+  database.raw(`SELECT m.id, m.name,
+                COALESCE(json_agg(f.* ORDER BY f.id) FILTER (WHERE f.id IS NOT NULL), '[]') AS foods
                 FROM meals m
                 LEFT JOIN meal_foods mf ON m.id = mf.meal_id
                 LEFT JOIN foods f ON f.id = mf.food_id
@@ -72,8 +75,8 @@ router.delete('/:meal_id/foods/:food_id', function(req, res, next) {
   database.raw(`DELETE FROM meal_foods WHERE meal_id=? AND food_id=?`, [meal_id, food_id])
     .then(() => {
       return database.raw(`SELECT m.name AS meal_name, f.name AS food_name
-                   FROM meals m, foods f
-                   WHERE m.id=? AND f.id=?`, [meal_id, food_id])
+                           FROM meals m, foods f
+                           WHERE m.id=? AND f.id=?`, [meal_id, food_id])
       })
       .then((result) => {
         if (!result.rows) {
