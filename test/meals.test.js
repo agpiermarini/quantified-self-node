@@ -47,6 +47,35 @@ describe('Meal endpoints', function() {
       })
     })
   });
+
+  describe("GET /api/v1/meals/:id/foods", () => {
+    it("returns all meal objects in the database", (done) => {
+      chai.request(app)
+      .get("/api/v1/meals/1/foods")
+      .end((err, res) => {
+        expect(err).to.be.null;
+        expect(res).to.have.status(200);
+        expect(res.body[0].name).to.eq("Breakfast");
+        expect(res.body[0].foods).to.not.be.undefined;
+        expect(res.body[0].foods[0].id).to.eq(1);
+        expect(res.body[0].foods[0].name).to.eq("Ramen");
+        expect(res.body[0].foods[0].calories).to.eq(650);
+        expect(res.body[0].foods[1].id).to.eq(2);
+        expect(res.body[0].foods[1].name).to.eq("Coffee");
+        expect(res.body[0].foods[1].calories).to.eq(50);
+        done();
+      })
+    })
+
+    it("returns 404 for nonexistent meal", (done) => {
+      chai.request(app)
+      .get("/api/v1/meals/5/foods")
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        done();
+      })
+    })
+  });
 });
 
 
