@@ -8,8 +8,9 @@ const database = require('knex')(configuration)
 /* GET all meals */
 router.get('/', function(req, res, next) {
   database.raw(`SELECT m.id, m.name, json_agg(f.* ORDER BY f.id) as foods
-                FROM meals m INNER JOIN meal_foods mf ON m.id = mf.meal_id
-                INNER JOIN foods f ON f.id = mf.food_id
+                FROM meals m
+                LEFT JOIN meal_foods mf ON m.id = mf.meal_id
+                LEFT JOIN foods f ON f.id = mf.food_id
                 GROUP BY m.id, m.name
                 ORDER BY id`)
     .then((meals) => {
@@ -26,8 +27,8 @@ router.get('/:id/foods', function(req, res, next) {
   let id = req.params.id
   database.raw(`SELECT m.id, m.name, json_agg(f.* ORDER BY f.id) as foods
                 FROM meals m
-                INNER JOIN meal_foods mf ON m.id = mf.meal_id
-                INNER JOIN foods f ON f.id = mf.food_id
+                LEFT JOIN meal_foods mf ON m.id = mf.meal_id
+                LEFT JOIN foods f ON f.id = mf.food_id
                 WHERE m.id=?
                 GROUP BY m.id, m.name`, [id])
     .then((foods) => {
