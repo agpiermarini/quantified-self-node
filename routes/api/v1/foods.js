@@ -25,7 +25,7 @@ router.get('/:id', function(req, res, next) {
       if (!food.rows.length == 1) {
         return res.sendStatus(404);
       } else {
-        return res.status(200).json(food.rows);
+        return res.status(200).json(food.rows[0]);
       }
     })
 });

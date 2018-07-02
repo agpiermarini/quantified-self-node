@@ -78,6 +78,7 @@ describe('Meal endpoints', function() {
   });
 });
 
+
 describe('Meal endpoints', function() {
   beforeEach(function(done) {
     knex.seed.run()
