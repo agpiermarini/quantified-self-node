@@ -7,7 +7,7 @@ exports.seed = function(knex, Promise) {
       return knex('meals').insert([
         {id: 1, colName: 'Breakfast'},
         {id: 2, colName: 'Snack'},
-        {id: 3, colName: 'Lunch'}
+        {id: 3, colName: 'Lunch'},
         {id: 4, colName: 'Dinner'}
       ]);
     });
