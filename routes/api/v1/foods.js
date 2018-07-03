@@ -5,30 +5,13 @@ const environment = process.env.NODE_ENV || 'development'
 const configuration = require('../../../knexfile')[environment]
 const database = require('knex')(configuration)
 
+const foodsController = require('../../../controllers/foodsController')
+
 /* GET all foods */
-router.get('/', function(req, res, next) {
-  database.raw('SELECT * FROM foods')
-    .then((foods) => {
-      if (!foods.rows) {
-        return res.sendStatus(404);
-      } else {
-        return res.status(200).json(foods.rows);
-      }
-    })
-});
+router.get('/', foodsController.index)
 
 /* GET foods item corresponding to :id */
-router.get('/:id', function(req, res, next) {
-  let id = req.params.id
-  database.raw('SELECT * FROM foods WHERE id=?', [id])
-    .then((food) => {
-      if (!food.rows.length == 1) {
-        return res.sendStatus(404);
-      } else {
-        return res.status(200).json(food.rows[0]);
-      }
-    })
-});
+router.get('/:id', foodsController.show)
 
 /* POST new food item */
 router.post('/', function(req, res, next) {
