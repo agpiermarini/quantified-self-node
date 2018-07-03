@@ -28,7 +28,20 @@ class Food {
       .then(food => res.status(200).json(food.rows[0]) )
       .catch(err => res.sendStatus(404))
   }
+
+  static update (req, res, next) {
+    let id = req.params.id
+    let name = req.body.food.name
+    let calories = req.body.food.calories
+
+    return database.raw('UPDATE foods SET name = ?, calories = ? WHERE id = ? RETURNING *', [name, calories, id])
+      .then(food => {
+        return food.rows.length == 1 ? res.status(200).json(food.rows[0]) : res.sendStatus(404)
+      })
+      .catch(err => res.sendStatus(404) )
+  }
 }
+
 
 
 module.exports = Food;
