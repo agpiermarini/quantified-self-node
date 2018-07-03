@@ -19,7 +19,7 @@ class Food {
     })
   }
 
-  static update (req, res, next) {
+  static create (req, res, next) {
     let name = req.body.food.name
     let calories = req.body.food.calories
 

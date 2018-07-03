@@ -14,7 +14,7 @@ router.get('/', foodsController.index)
 router.get('/:id', foodsController.show)
 
 /* POST new food item */
-router.post('/', foodsController.update)
+router.post('/', foodsController.create)
 
 /* PATCH existing food item */
 router.patch('/:id', function(req, res, next) {

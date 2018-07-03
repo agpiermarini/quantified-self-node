@@ -12,8 +12,8 @@ class foodController {
     return await Food.find(req, res, next)
   }
 
-  static async update(req, res, next) {
-    return await Food.update(req, res, next)
+  static async create(req, res, next) {
+    return await Food.create(req, res, next)
   }
 }
 
