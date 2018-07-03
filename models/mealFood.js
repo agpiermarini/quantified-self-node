@@ -7,6 +7,7 @@ class MealFood {
   static create (req, res, next) {
     let meal_id = req.params.meal_id
     let food_id = req.params.food_id
+
     return database.raw(`INSERT INTO meal_foods (meal_id, food_id) VALUES (?, ?)`, [meal_id, food_id])
       .then(() => {
         return database.raw(`SELECT m.name AS meal_name, f.name AS food_name
@@ -18,12 +19,16 @@ class MealFood {
         let msg = { message: `Successfully added ${names.food_name} to ${names.meal_name}` }
         return result.rows ? res.status(200).json(msg) : res.sendStatus(404)
       })
-      .catch(err => res.sendStatus(404) )
+      .catch(err => {
+        console.log(err)
+        res.sendStatus(404) }
+      )
   }
 
   static delete (req, res, next) {
     let meal_id = req.params.meal_id
     let food_id = req.params.food_id
+
     return database.raw(`DELETE FROM meal_foods WHERE meal_id=? AND food_id=?`, [meal_id, food_id])
       .then(() => {
         return database.raw(`SELECT m.name AS meal_name, f.name AS food_name

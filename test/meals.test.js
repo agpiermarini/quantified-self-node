@@ -36,8 +36,8 @@ describe('Meal endpoints', function() {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
         expect(res.body[0].name).to.eq("Breakfast");
-        expect(res.body[1].name).to.eq("Lunch");
-        expect(res.body[2].name).to.eq("Snack");
+        expect(res.body[1].name).to.eq("Snack");
+        expect(res.body[2].name).to.eq("Lunch");
         expect(res.body[3].name).to.eq("Dinner");
         expect(res.body[3].foods).to.not.be.undefined;
         expect(res.body[3].foods[0].id).to.eq(1);

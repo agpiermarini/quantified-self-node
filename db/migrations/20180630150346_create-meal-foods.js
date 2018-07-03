@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   let createTable = `CREATE TABLE meal_foods(
-                      id SERIAL PRIMARY KEY NOT NULL,
+                      id SERIAL PRIMARY KEY,
                       meal_id INTEGER REFERENCES meals ON DELETE CASCADE,
                       food_id INTEGER REFERENCES foods ON DELETE CASCADE)`
   return knex.raw(createTable);

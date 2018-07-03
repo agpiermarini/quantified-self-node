@@ -19,6 +19,7 @@ class Meal {
 
   static find (req, res, next) {
     let id = req.params.id
+    
     return database.raw(`SELECT m.id, m.name,
                          COALESCE(json_agg(f.* ORDER BY f.id) FILTER (WHERE f.id IS NOT NULL), '[]') AS foods
                          FROM meals m
