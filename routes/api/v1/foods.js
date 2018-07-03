@@ -14,21 +14,7 @@ router.get('/', foodsController.index)
 router.get('/:id', foodsController.show)
 
 /* POST new food item */
-router.post('/', function(req, res, next) {
-  let name = req.body.food.name
-  let calories = req.body.food.calories
-  database.raw('INSERT INTO foods (name, calories) VALUES (?, ?) RETURNING *', [name, calories])
-    .then(food => {
-      if (!food.rows) {
-        return res.sendStatus(404);
-      } else {
-        return res.status(200).json(food.rows[0]);
-      }
-    })
-    .catch(err=>{
-      return res.sendStatus(404);
-    })
-});
+router.post('/', foodsController.update)
 
 /* PATCH existing food item */
 router.patch('/:id', function(req, res, next) {

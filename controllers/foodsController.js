@@ -11,6 +11,10 @@ class foodController {
   static async show(req, res, next) {
     return await Food.find(req, res, next)
   }
+
+  static async update(req, res, next) {
+    return await Food.update(req, res, next)
+  }
 }
 
 module.exports = foodController;
