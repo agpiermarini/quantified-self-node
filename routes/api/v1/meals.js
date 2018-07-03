@@ -10,25 +10,8 @@ const mealsController = require('../../../controllers/mealsController')
 router.get('/', mealsController.index)
 
 /* GET all foods associated with a meal */
-router.get('/:id/foods', function(req, res, next) {
-                  // json_agg(f.* ORDER BY f.id) as foods
-  let id = req.params.id
-  database.raw(`SELECT m.id, m.name,
-                COALESCE(json_agg(f.* ORDER BY f.id) FILTER (WHERE f.id IS NOT NULL), '[]') AS foods
-                FROM meals m
-                LEFT JOIN meal_foods mf ON m.id = mf.meal_id
-                LEFT JOIN foods f ON f.id = mf.food_id
-                WHERE m.id=?
-                GROUP BY m.id, m.name`, [id])
-    .then((foods) => {
-      if (!foods.rows.length == 1) {
-        return res.sendStatus(404);
-      } else {
-        return res.status(200).json(foods.rows)
-      }
-    })
-});
-
+router.get('/:id/foods', mealsController.show)
+  
 /* POST create joins record for existing food item and existing meal */
 router.post('/:meal_id/foods/:food_id', function(req, res, next) {
   let meal_id = req.params.meal_id

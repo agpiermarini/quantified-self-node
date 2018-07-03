@@ -17,7 +17,19 @@ class Meal {
       })
   }
 
-  
+  static find (req, res, next) {
+    let id = req.params.id
+    return database.raw(`SELECT m.id, m.name,
+                         COALESCE(json_agg(f.* ORDER BY f.id) FILTER (WHERE f.id IS NOT NULL), '[]') AS foods
+                         FROM meals m
+                         LEFT JOIN meal_foods mf ON m.id = mf.meal_id
+                         LEFT JOIN foods f ON f.id = mf.food_id
+                         WHERE m.id=?
+                         GROUP BY m.id, m.name`, [id])
+      .then(meal => {
+        return meal.rows.length == 1 ? res.status(200).json(meal.rows) : res.sendStatus(404)
+      })
+  }
 }
 
 module.exports = Meal;
