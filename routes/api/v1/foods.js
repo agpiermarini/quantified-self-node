@@ -65,6 +65,24 @@ router.patch('/:id', function(req, res, next) {
     })
 });
 
+/* PUT existing food item */
+router.put('/:id', function(req, res, next) {
+  let id = req.params.id
+  let name = req.body.food.name
+  let calories = req.body.food.calories
+  database.raw('UPDATE foods SET name = ?, calories = ? WHERE id = ? RETURNING *', [name, calories, id])
+    .then(food => {
+      if (!food.rows.length == 1) {
+        return res.sendStatus(404);
+      } else {
+        return res.status(200).json(food.rows[0]);
+      }
+    })
+    .catch(err => {
+      return res.sendStatus(404);
+    })
+});
+
 /* DELETE existing food item */
 router.delete('/:id', function(req, res, next) {
   let id = req.params.id
