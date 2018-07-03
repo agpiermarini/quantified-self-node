@@ -34,11 +34,19 @@ class Food {
     let name = req.body.food.name
     let calories = req.body.food.calories
 
-    return database.raw('UPDATE foods SET name = ?, calories = ? WHERE id = ? RETURNING *', [name, calories, id])
+    return database.raw(`UPDATE foods SET name = ?, calories = ?
+                         WHERE id = ? RETURNING *`, [name, calories, id])
       .then(food => {
         return food.rows.length == 1 ? res.status(200).json(food.rows[0]) : res.sendStatus(404)
       })
       .catch(err => res.sendStatus(404) )
+  }
+
+  static delete (req, res, next) {
+    let id = req.params.id
+
+    return database.raw('DELETE FROM foods WHERE id = ?', [id])
+      .then(food =>  food.rows ? res.sendStatus(204) : res.sendStatus(404) )
   }
 }
 
