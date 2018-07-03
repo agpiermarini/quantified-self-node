@@ -19,10 +19,7 @@ class MealFood {
         let msg = { message: `Successfully added ${names.food_name} to ${names.meal_name}` }
         return result.rows ? res.status(200).json(msg) : res.sendStatus(404)
       })
-      .catch(err => {
-        console.log(err)
-        res.sendStatus(404) }
-      )
+      .catch(err => res.sendStatus(404) )
   }
 
   static delete (req, res, next) {
