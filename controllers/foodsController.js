@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const Food = require('../models/food')
 
-class foodController {
+class foodsController {
 
   static async index (req, res, next) {
     return await Food.all (req, res, next)
@@ -25,4 +25,4 @@ class foodController {
   }
 }
 
-module.exports = foodController;
+module.exports = foodsController;
