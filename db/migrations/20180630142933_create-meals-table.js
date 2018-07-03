@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
   let createTable = `CREATE TABLE meals(
-                    id SERIAL PRIMARY KEY NOT NULL,
+                    id SERIAL PRIMARY KEY,
                     name TEXT NOT NULL)`
   return knex.raw(createTable);
 };
