@@ -1,9 +1,7 @@
-# Quantified Self API (Rails)
-This is a Express-based API of which the ostensible purpose is to interface with the [Quantified Self Front End](https://agpiermarini.github.io/quantified-self-fe-node/), which is a calorie tracking application.
+# Quantified Self API (Express)
+This is a Express-based API of which the ostensible purpose is to interface with the [Quantified Self Front End](https://agpiermarini.github.io/quantified-self-fe-node/), which is a calorie tracking application. The Quantified Self API also allows a user or application to post and consume data for foods and meals. 
 
-The Quantified Self API also allows a user or application to post and consume data for foods and meals, and is currently hosted on Heroku at https://quantified-self-node-express.herokuapp.com/.  
-
- Local setup instructions and information regarding each of the available endpoints, are detailed below.
+It is currently hosted on Heroku at https://quantified-self-node-express.herokuapp.com/. Local setup instructions and information regarding each of the available endpoints, are detailed below.
 
 ___
 ### Setup
