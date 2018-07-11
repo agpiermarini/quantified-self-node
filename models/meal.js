@@ -25,9 +25,7 @@ class Meal {
                          LEFT JOIN foods f ON f.id = mf.food_id
                          WHERE m.id=?
                          GROUP BY m.id, m.name`, [id])
-      .then(meal => {
-        return meal.rows.length == 1 ? res.status(200).json(meal.rows[0]) : res.sendStatus(404)
-      })
+      .then(meal => meal )
   }
 }
 

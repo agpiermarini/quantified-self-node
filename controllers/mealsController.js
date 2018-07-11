@@ -10,7 +10,8 @@ class mealsController {
   }
 
   static async show (req, res, next) {
-    return await Meal.find(req, res, next)
+    const meal = await Meal.find(req, res, next)
+    return meal.rows.length == 1 ? res.status(200).json(meal.rows[0]) : res.sendStatus(404)
   }
 }
 
