@@ -260,23 +260,27 @@ Request URL
 
 Response Body
 ```
-[
   {
-      "id": 1,
-      "name": "Mango",
-      "calories": 150
+     "id": 1,
+     "name": "Breakfast",
+     "foods": [
+         {
+            "id": 1,
+            "name": "Mango",
+            "calories": 150
+         },
+         {
+            "id": 6,
+            "name": "Yogurt",
+            "calories": 550
+          },
+          {
+             "id": 12,
+             "name": "Coffee",
+             "calories": 50
+          }
+     ]
   },
-  {
-      "id": 6,
-      "name": "Yogurt",
-      "calories": 550
-  },
-  {
-      "id": 12,
-      "name": "Coffee",
-      "calories": 50
-  }
-]
 ```
 
 Response Code
