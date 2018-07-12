@@ -1,7 +1,9 @@
 # Quantified Self API (Express)
-This is a Express-based API of which the ostensible purpose is to interface with the [Quantified Self Front End](https://agpiermarini.github.io/quantified-self-fe-node/), which is a calorie tracking application. The Quantified Self API also allows a user or application to post and consume data for foods and meals. 
+This is a Express-based API of which the ostensible purpose is to interface with the [Quantified Self Front End](https://agpiermarini.github.io/quantified-self-fe-node/) calorie tracking application.
 
-It is currently hosted on Heroku at https://quantified-self-node-express.herokuapp.com/. Local setup instructions and information regarding each of the available endpoints, are detailed below.
+The Quantified Self API allows a user or application to post and consume data for foods and meals. It is currently deployed on Heroku at https://quantified-self-node-express.herokuapp.com/.
+
+Local setup instructions and information regarding each of the available endpoints, are detailed below.
 
 ___
 ### Setup
@@ -11,23 +13,22 @@ To run this application locally, first clone the repository from the following l
 $ git clone https://github.com/agpiermarini/quantified-self-node
 ```
 
-From the application directory, run the following commands to install and update all gem dependencies:
+From the application directory, run the following commands to install dependencies:
 
 ```
-$ bundle
-$ bundle update
+$ npm install
 ```
 
 Next, run the following commands to initialize the database:
 
 ```
-$ rake db:{create,migrate}
+$ knex migrate:latest
 ```
 
 Then spin up a server:
 
 ```
-$ rails s
+$ npm start
 ```
 
 ___
@@ -35,16 +36,14 @@ ___
 
 Fork the [repository](https://github.com/agpiermarini/quantified-self-node) if you would like to contribute to this project. Pull requests will be considered in kind, but please note that contributions must adhere to a test-driven, rebase workflow.
 
-This project uses the RSpec test framework. Run tests using the standard `$ rspec` command.
-
-#### Database Schema
-![schema](public/schema.png)
+This project uses the Mocha/Chai test framework. Run tests using the standard `$ mocha` command.
 
 
 #### Current Contributors
 [Andrew Piermarini](http://www.github.com/agpiermarini)
 
-### Versions
+
+### Tech Stack
 Javascript  
 Node
 Express
