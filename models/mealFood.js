@@ -14,8 +14,8 @@ class MealFood {
                              FROM meals m, foods f
                              WHERE m.id=? AND f.id=?`, [meal_id, food_id])
       })
-      .then(result => {
-        let names = result.rows[0]
+      .then(new_meal_food => {
+        let names = new_meal_food.rows[0]
         return { message: `Successfully added ${names.food_name} to ${names.meal_name}` }
       })
       .catch(err => null )
@@ -31,8 +31,8 @@ class MealFood {
                              FROM meals m, foods f
                              WHERE m.id=? AND f.id=?`, [meal_id, food_id])
         })
-        .then(result => {
-          let names = result.rows[0]
+        .then(delete_meal_food => {
+          let names = delete_meal_food.rows[0]
           return { message: `Successfully removed ${names.food_name} from ${names.meal_name}` }
         })
         .catch(err => null )
