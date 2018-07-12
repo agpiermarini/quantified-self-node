@@ -25,7 +25,7 @@ class Meal {
                          LEFT JOIN foods f ON f.id = mf.food_id
                          WHERE m.id=?
                          GROUP BY m.id, m.name`, [id])
-      .then(meal => meal )
+      .then( meal => meal )
   }
 }
 

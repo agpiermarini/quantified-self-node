@@ -14,11 +14,7 @@ class MealFood {
                              FROM meals m, foods f
                              WHERE m.id=? AND f.id=?`, [meal_id, food_id])
       })
-      .then(result => {
-        let names = result.rows[0]
-        let msg = { message: `Successfully added ${names.food_name} to ${names.meal_name}` }
-        return result.rows ? res.status(200).json(msg) : res.sendStatus(404)
-      })
+      .then(new_meal => new_meal )
       .catch(err => res.sendStatus(404) )
   }
 
