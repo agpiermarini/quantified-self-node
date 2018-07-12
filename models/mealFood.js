@@ -14,8 +14,11 @@ class MealFood {
                              FROM meals m, foods f
                              WHERE m.id=? AND f.id=?`, [meal_id, food_id])
       })
-      .then(new_meal => new_meal )
-      .catch(err => res.sendStatus(404) )
+      .then(result => {
+        let names = result.rows[0]
+        return { message: `Successfully added ${names.food_name} to ${names.meal_name}` }
+      })
+      .catch(err => null )
   }
 
   static delete (req, res, next) {

@@ -5,10 +5,8 @@ const MealFood = require('../models/mealFood')
 class mealFoodsController {
 
   static async create (req, res, next) {
-    const new_meal = await MealFood.create(req, res, next)
-    let names = new_meal.rows[0]
-    let msg = { message: `Successfully added ${names.food_name} to ${names.meal_name}` }
-    return new_meal.rows ? res.status(200).json(msg) : res.sendStatus(404)
+    const message = await MealFood.create(req, res, next)
+    return message ? res.status(200).json(message) : res.sendStatus(404)
   }
 
   static async delete (req, res, next) {
