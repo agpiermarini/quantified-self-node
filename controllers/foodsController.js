@@ -5,7 +5,9 @@ const Food = require('../models/food')
 class foodsController {
 
   static async index (req, res, next) {
-    return await Food.all (req, res, next)
+    const foods = await Food.all ()
+    return foods.rows ? res.status(200).json(foods.rows) : res.sendStatus(404)
+
   }
 
   static async show (req, res, next) {
