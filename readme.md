@@ -8,7 +8,7 @@ ___
 To run this application locally, first clone the repository from the following location:
 
 ```
-$ git clone https://github.com/agpiermarini/quantified-self-rails
+$ git clone https://github.com/agpiermarini/quantified-self-node
 ```
 
 From the application directory, run the following commands to install and update all gem dependencies:
