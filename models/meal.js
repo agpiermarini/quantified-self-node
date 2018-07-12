@@ -15,7 +15,7 @@ class Meal {
       .then( meals => meals )
   }
 
-  static find (req, res, next) {
+  static find (req) {
     let id = req.params.id
 
     return database.raw(`SELECT m.id, m.name,

@@ -4,7 +4,7 @@ const database = require('knex')(configuration)
 
 class MealFood {
 
-  static create (req, res, next) {
+  static create (req) {
     let meal_id = req.params.meal_id
     let food_id = req.params.food_id
 
@@ -21,7 +21,7 @@ class MealFood {
       .catch(err => null )
   }
 
-  static delete (req, res, next) {
+  static delete (req) {
     let meal_id = req.params.meal_id
     let food_id = req.params.food_id
 
@@ -33,10 +33,9 @@ class MealFood {
         })
         .then(result => {
           let names = result.rows[0]
-          let msg = { message: `Successfully removed ${names.food_name} from ${names.meal_name}` }
-          return result.rows ? res.status(200).json(msg) : res.sendStatus(404)
+          return { message: `Successfully removed ${names.food_name} from ${names.meal_name}` }
         })
-        .catch(err => res.sendStatus(404))
+        .catch(err => null )
   }
 
 }
