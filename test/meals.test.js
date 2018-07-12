@@ -55,14 +55,14 @@ describe('Meal endpoints', function() {
       .end((err, res) => {
         expect(err).to.be.null;
         expect(res).to.have.status(200);
-        expect(res.body[0].name).to.eq("Breakfast");
-        expect(res.body[0].foods).to.not.be.undefined;
-        expect(res.body[0].foods[0].id).to.eq(1);
-        expect(res.body[0].foods[0].name).to.eq("Ramen");
-        expect(res.body[0].foods[0].calories).to.eq(650);
-        expect(res.body[0].foods[1].id).to.eq(2);
-        expect(res.body[0].foods[1].name).to.eq("Coffee");
-        expect(res.body[0].foods[1].calories).to.eq(50);
+        expect(res.body.name).to.eq("Breakfast");
+        expect(res.body.foods).to.not.be.undefined;
+        expect(res.body.foods[0].id).to.eq(1);
+        expect(res.body.foods[0].name).to.eq("Ramen");
+        expect(res.body.foods[0].calories).to.eq(650);
+        expect(res.body.foods[1].id).to.eq(2);
+        expect(res.body.foods[1].name).to.eq("Coffee");
+        expect(res.body.foods[1].calories).to.eq(50);
         done();
       })
     })

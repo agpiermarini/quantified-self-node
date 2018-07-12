@@ -4,7 +4,7 @@ const database = require('knex')(configuration)
 
 class MealFood {
 
-  static create (req, res, next) {
+  static create (req) {
     let meal_id = req.params.meal_id
     let food_id = req.params.food_id
 
@@ -14,18 +14,14 @@ class MealFood {
                              FROM meals m, foods f
                              WHERE m.id=? AND f.id=?`, [meal_id, food_id])
       })
-      .then(result => {
-        let names = result.rows[0]
-        let msg = { message: `Successfully added ${names.food_name} to ${names.meal_name}` }
-        return result.rows ? res.status(200).json(msg) : res.sendStatus(404)
+      .then(new_meal_food => {
+        let names = new_meal_food.rows[0]
+        return { message: `Successfully added ${names.food_name} to ${names.meal_name}` }
       })
-      .catch(err => {
-        console.log(err)
-        res.sendStatus(404) }
-      )
+      .catch(err => null )
   }
 
-  static delete (req, res, next) {
+  static delete (req) {
     let meal_id = req.params.meal_id
     let food_id = req.params.food_id
 
@@ -35,12 +31,11 @@ class MealFood {
                              FROM meals m, foods f
                              WHERE m.id=? AND f.id=?`, [meal_id, food_id])
         })
-        .then(result => {
-          let names = result.rows[0]
-          let msg = { message: `Successfully removed ${names.food_name} from ${names.meal_name}` }
-          return result.rows ? res.status(200).json(msg) : res.sendStatus(404)
+        .then(delete_meal_food => {
+          let names = delete_meal_food.rows[0]
+          return { message: `Successfully removed ${names.food_name} from ${names.meal_name}` }
         })
-        .catch(err => res.sendStatus(404))
+        .catch(err => null )
   }
 
 }

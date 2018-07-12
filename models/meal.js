@@ -4,7 +4,7 @@ const database = require('knex')(configuration)
 
 class Meal {
 
-  static all (req, res, next) {
+  static all () {
     return database.raw(`SELECT m.id, m.name,
                          COALESCE(json_agg(f.* ORDER BY f.id) FILTER (WHERE f.id IS NOT NULL), '[]') AS foods
                          FROM meals m
@@ -12,14 +12,12 @@ class Meal {
                          LEFT JOIN foods f ON f.id = mf.food_id
                          GROUP BY m.id, m.name
                          ORDER BY id`)
-      .then( meals => {
-        return meals.rows ? res.status(200).json(meals.rows) : res.sendStatus(404)
-      })
+      .then( meals => meals )
   }
 
-  static find (req, res, next) {
+  static find (req) {
     let id = req.params.id
-    
+
     return database.raw(`SELECT m.id, m.name,
                          COALESCE(json_agg(f.* ORDER BY f.id) FILTER (WHERE f.id IS NOT NULL), '[]') AS foods
                          FROM meals m
@@ -27,9 +25,7 @@ class Meal {
                          LEFT JOIN foods f ON f.id = mf.food_id
                          WHERE m.id=?
                          GROUP BY m.id, m.name`, [id])
-      .then(meal => {
-        return meal.rows.length == 1 ? res.status(200).json(meal.rows) : res.sendStatus(404)
-      })
+      .then( meal => meal )
   }
 }
 
