@@ -9,13 +9,11 @@ class Food {
       .then(foods => foods )
   }
 
-  static find (req, res, next) {
+  static find (req) {
     let id = req.params.id
 
     return database.raw('SELECT * FROM foods WHERE id=?', [id])
-      .then(food => {
-        return food.rows.length == 1 ? res.status(200).json(food.rows[0]) : res.sendStatus(404)
-    })
+      .then(food => food )
   }
 
   static create (req, res, next) {
