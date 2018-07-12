@@ -15,7 +15,8 @@ class foodsController {
   }
 
   static async create (req, res, next) {
-    return await Food.create (req, res, next)
+    const food = await Food.create (req, res, next)
+    return food ? res.status(200).json(food.rows[0]) : res.sendStatus(404)
   }
 
   static async update (req, res, next) {

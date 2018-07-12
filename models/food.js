@@ -22,8 +22,8 @@ class Food {
 
     return database.raw(`INSERT INTO foods (name, calories)
                          VALUES (?, ?) RETURNING *`, [name, calories])
-      .then(food => res.status(200).json(food.rows[0]) )
-      .catch(err => res.sendStatus(404))
+      .then(food => food )
+      .catch(err => null )
   }
 
   static update (req, res, next) {
