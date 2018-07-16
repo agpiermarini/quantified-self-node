@@ -8,7 +8,7 @@ class favoriteFoodsController {
 
   static async index (req, res, next) {
     const foodCounts = await MealFood.timesEaten()
-    let favoriteFoods = foodCounts.rows.map(row => {
+    const favoriteFoods = foodCounts.rows.map(row => {
       let favorite = {}
       favorite["timesEaten"] = row.timeseaten
       favorite["foods"] = [{}]
