@@ -4,10 +4,6 @@ const Food = require('../models/food')
 const Meal = require('../models/meal')
 const MealFood = require('../models/mealFood')
 
-const environment = process.env.NODE_ENV || 'development'
-const configuration = require('../knexfile')[environment]
-const database = require('knex')(configuration)
-
 class favoriteFoodsController {
 
   static async index (req, res, next) {
