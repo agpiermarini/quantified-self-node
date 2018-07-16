@@ -12,13 +12,20 @@ class recipesController {
     let food = await Food.find(req)
     let food_name = food.rows[0].name
 
-    let recipeResults = fetch(`${baseUrl}&${food_name}`)
+    const recipeResults = (name) => {
+      return fetch(`${baseUrl}&${name}`)
       .then(response => response.json())
-      .then(recipes => recipes.matches)
+      .then(recipes => recipeMatches(recipes.matches))
+      // .then(recipes => console.log(recipes))
       .catch(error => error)
+    }
 
-    console.log(recipeResults)
-    return res.status(200).json(recipeResults)
+    const recipeMatches = (recipes) => {
+      return recipes
+    }
+
+    // console.log(recipeResults)
+    return res.status(200).json(recipeResults(food_name))
   }
 
   // formatRecipes (recipes) {
