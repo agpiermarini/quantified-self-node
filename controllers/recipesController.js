@@ -16,14 +16,10 @@ class recipesController {
 
     const formatRecipes = (recipes) => {
       let recipeList = recipes.map(recipe => {
-        let result = {}
-        result["name"] = recipe.recipeName
-        result["url"] = `http://www.yummly.co/recipe/${recipe.id}`
-        return result
+        return {"name": recipe.recipeName, "url": `http://www.yummly.co/recipe/${recipe.id}`}
       })
       return { "recipes": recipeList }
     }
-
     return res.status(200).json(formatRecipes(recipes))
   }
 }
