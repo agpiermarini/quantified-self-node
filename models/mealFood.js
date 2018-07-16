@@ -43,22 +43,8 @@ class MealFood {
                          FROM meal_foods JOIN foods ON meal_foods.food_id = foods.id
                          JOIN meals ON meal_foods.meal_id = meals.id
                          GROUP BY meal_foods.food_id, foods.id, foods.name, foods.calories;`)
-    // return database.raw(`SELECT count(foods.id) as timeseaten, foods.id, foods.name, foods.calories
-    //                      FROM meal_foods
-    //                      JOIN foods ON meal_foods.food_id = foods.id
-    //                      GROUP BY meal_foods.food_id, foods.name, foods.calories, foods.id
-    //                      ORDER BY timesEaten DESC;`)
     .then(foodCounts => foodCounts)
   }
-  //
-  // static mealNames (food_id) {
-  //   let food_id = food_id
-  //   return database.raw(`SELECT meals.name
-  //                        FROM meals
-  //                        JOIN meal_foods ON meal_foods.meal_id = meals.id
-  //                        WHERE meal_foods.food_id = ?)`, [food_id])
-  //   .then(names => names)
-  // }
 }
 
 
