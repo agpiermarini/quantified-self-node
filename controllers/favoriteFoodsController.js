@@ -14,8 +14,11 @@ class favoriteFoodsController {
       favorite["foods"] = [{}]
       favorite["foods"][0]["name"] = row.name
       favorite["foods"][0]["calories"] = row.calories
+      favorite["meals"] = row.meal_names.map(meal => {
+        return meal.name
+      })
       return favorite
-    }
+    })
     return favoriteFoods ? res.status(200).json(favoriteFoods) : res.sendStatus(404)
   }
 }
