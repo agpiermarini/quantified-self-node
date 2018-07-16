@@ -4,6 +4,10 @@ const Food = require('../models/food')
 const Meal = require('../models/meal')
 const MealFood = require('../models/mealFood')
 
+const environment = process.env.NODE_ENV || 'development'
+const configuration = require('../knexfile')[environment]
+const database = require('knex')(configuration)
+
 class favoriteFoodsController {
 
   static async index (req, res, next) {
@@ -14,8 +18,11 @@ class favoriteFoodsController {
       favorite["foods"] = [{}]
       favorite["foods"][0]["name"] = row.name
       favorite["foods"][0]["calories"] = row.calories
+      favorite["meals"] = row.meal_names.map(meal => {
+        return meal.name
+      })
       return favorite
-    }
+    })
     return favoriteFoods ? res.status(200).json(favoriteFoods) : res.sendStatus(404)
   }
 }
