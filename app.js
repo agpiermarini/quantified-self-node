@@ -8,7 +8,7 @@ var cors = require('cors')
 var indexRouter = require('./routes/index');
 var foodsRouter = require('./routes/api/v1/foods');
 var mealsRouter = require('./routes/api/v1/meals');
-var mealsRouter = require('./routes/api/v1/favorite_foods');
+var favoriteFoodsRouter = require('./routes/api/v1/favorite_foods');
 
 var app = express();
 
